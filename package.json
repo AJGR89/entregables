@@ -1,0 +1,27 @@
+{
+  "name": "entregables",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon ./entregable04/src/index.js",
+    "start": "node ./entregable04/src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AJGR89/entregables.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AJGR89/entregables/issues"
+  },
+  "homepage": "https://github.com/AJGR89/entregables#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  },
+  "dependencies": {
+    "express": "^4.17.3"
+  }
+}

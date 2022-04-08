@@ -1,38 +1,17 @@
 const express = require("express");
-const myContenedor = require("./database");
+const path = require('path')
+const productsRoutes = require("./routes/products.routes");
 
 const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-const msgInitial = `<h1>Welcome to Products API</h1>
-<h3>Endpoints:</h3>
-<ul>
-    <li><b>/productos :</b> <p> Returns an array with all the products</p> </li>
-    <li><b> /productoRandom: </b><p> Returns a random product</p> </li>
-</ul>`;
+app.use(express.static(path.join(__dirname, 'public')));
 
-const indexRandom = (min, max) => {
-  let i = Math.random() * (max - min) + min;
-  return Math.floor(i);
-};
+app.use("/api/productos", productsRoutes);
 
-app.get("/", (req, res) => {
-  res.send(msgInitial);
-});
-
-app.get("/productos", async (req, res) => {
-  try {
-    res.json(await myContenedor.getAll());
-  } catch (error) {
-    res.status(404).json({ msg: "products not found" });
-  }
-});
-
-app.get("/productoRandom", async (req, res) => {
-  try {
-    const products = await myContenedor.getAll();
-    const index = indexRandom(1, products.length);
-    res.json({ msg: `product random ${index}`, product: products[index] });
-  } catch (error) {}
+app.get('/',(req,res)=>{
+  res.send(path.join(__dirname, 'public'))
 });
 
 module.exports = app;

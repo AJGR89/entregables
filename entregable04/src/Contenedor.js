@@ -4,8 +4,8 @@ class Contenedor {
   /* CONSTRUCTOR */
   constructor(name) {
     this.nameFile = name;
-    this._uriFile = `./src/files/${this.nameFile}`;
-    this.uriID = "./src/files/lastid.txt";
+    this._uriFile = `./entregable04/src/files/${this.nameFile}`;
+    this.uriID = "./entregable04/src/files/lastid.txt";
     this._emptyFile;
     this._id;
     this._products = [];
@@ -42,9 +42,10 @@ class Contenedor {
       this._products.push(newProduct);
       fs.writeFileSync(this._uriFile, JSON.stringify(this._products));
       fs.writeFileSync(this.uriID, this._id.toString());
-      return this._id;
+      return newProduct;
     } catch (error) {
       console.log("[save()]: could not save object");
+      return null;
     }
   }
 
@@ -81,7 +82,8 @@ class Contenedor {
       if (index4delete != null) {
         this._products.splice(index4delete, 1);
         fs.writeFileSync(this._uriFile, JSON.stringify(this._products));
-      }
+        return true;
+      }return false;
     } catch (error) {
       console.log(error);
     }
@@ -94,6 +96,26 @@ class Contenedor {
       this._products = [];
     } catch (error) {
       console.log("[deleteAll()]: could not delete all elements");
+    }
+  }
+
+  /* UPDATE ELEMENT */
+  updateById(id,product){
+    const Id = id;
+    let index4update = null;
+    try {
+      this._products.forEach((el, index) => {
+        if (el._id === Id) {
+          index4update = index;
+        }
+      });
+      if (index4update != null) {
+        this._products[Id] = product;
+        fs.writeFileSync(this._uriFile, JSON.stringify(this._products));
+        return true;
+      }return false;
+    } catch (error) {
+      console.log(error);
     }
   }
 }
